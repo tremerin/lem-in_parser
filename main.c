@@ -49,13 +49,32 @@ int is_room(char *str)
 
 int is_link(char *str)
 {
-    printf("%s", str);
+    size_t  i;
+    size_t  dash;
+
+    i = 0;
+    dash = 0;
+    if (str[i] == ' ' || str[i] == '-')
+        return (0);
+    while (str[i]) 
+    {
+        if (str[i] == '-' && dash == 0)
+        {
+            dash++;
+            //check room name
+        }
+        i++;
+    }
+    if (dash != 1)
+        return (0);
+
     return (1);
 }
 
 int main(void)
 {
     char    *str;
+    char    *link_str;
     int     start;
     int     end;
     t_data  *data;
@@ -66,6 +85,7 @@ int main(void)
     start = 0;
     end = 0;
     str = get_next_line(0);
+    link_str = ft_strdup("");
     if (is_int(str))
         data->ants = ft_atoi(str);
     while (str)
@@ -95,7 +115,7 @@ int main(void)
             data->rooms = ft_strjoin(data->rooms, str);
         //check link
         if (is_link(str))
-            printf("link ");
+            link_str = ft_strjoin(link_str, str);
         free(str);
         str = get_next_line(0);
     }
@@ -103,5 +123,6 @@ int main(void)
     printf("Start: %s", data->start);
     printf("End: %s", data->end);
     printf("Rooms: %s", data->rooms);
+    printf("Links: %s", link_str);
     return (0);
 }
