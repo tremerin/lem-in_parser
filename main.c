@@ -71,12 +71,26 @@ int is_link(char *str)
     return (1);
 }
 
+void make_table(t_data * data)
+{
+    char **rooms = ft_split(data->rooms, '\n');
+    int i = 0;
+    printf("create table\n");
+    while (rooms[i])
+    {
+        printf("room: %s\n", rooms[i]);
+        i++;
+    }
+    printf("total rooms: %i\n", i);
+}
+
 int main(void)
 {
     char    *str;
     char    *link_str;
     int     start;
     int     end;
+    int     create_table;
     t_data  *data;
 
     data = malloc(sizeof(t_data));
@@ -84,6 +98,7 @@ int main(void)
     data->links = NULL;
     start = 0;
     end = 0;
+    create_table = 0;
     str = get_next_line(0);
     link_str = ft_strdup("");
     if (is_int(str))
@@ -115,7 +130,15 @@ int main(void)
             data->rooms = ft_strjoin(data->rooms, str);
         //check link
         if (is_link(str))
+        {
+            create_table++;
+            if (create_table == 1)
+            {
+                make_table(data);
+            }
             link_str = ft_strjoin(link_str, str);
+
+        }
         free(str);
         str = get_next_line(0);
     }

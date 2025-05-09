@@ -11,6 +11,7 @@ typedef struct s_data
     char    *end;
     char    *rooms;
     char    **links;
+    char    **names;
 }   t_data;
 
 void ft_test(void);
