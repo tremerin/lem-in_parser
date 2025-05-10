@@ -71,6 +71,27 @@ int is_link(char *str)
     return (1);
 }
 
+char *get_name(char *room)
+{
+    char    *name;
+    size_t  i;
+    size_t  j;
+
+    i = 0;
+    j = 0;
+    while (room[i] != ' ')
+        i++;
+    name = malloc((i + 1) * sizeof(char));
+    while (j < i)
+    {
+        name[j] = room[j];
+        j++;
+    }
+    name[j] = '\0';
+    printf("get name: %s\n", name);
+    return (name);
+}
+
 void make_table(t_data * data)
 {
     char **rooms = ft_split(data->rooms, '\n');
@@ -82,6 +103,15 @@ void make_table(t_data * data)
         i++;
     }
     printf("total rooms: %i\n", i);
+    data->names = malloc((i + 1) * sizeof(char));
+    i = 0;
+    while (rooms[i])
+    {
+        data->names[i] = get_name(rooms[i]);
+        printf("stored: %s\n", data->names[i]);
+        i++;
+    }
+    data->names[i] = '\0';
 }
 
 int main(void)
@@ -145,7 +175,14 @@ int main(void)
     printf("\nAnts: %d\n", data->ants);
     printf("Start: %s", data->start);
     printf("End: %s", data->end);
-    printf("Rooms: %s", data->rooms);
-    printf("Links: %s", link_str);
+    printf("Rooms:\n%s", data->rooms);
+    printf("Links:\n%s\n", link_str);
+    printf("data->names:\n");
+    int i = 0;
+    while (data->names[i])
+    {
+        printf("%s.\n", data->names[i]);
+        i++;
+    }
     return (0);
 }
