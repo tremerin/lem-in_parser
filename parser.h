@@ -10,8 +10,9 @@ typedef struct s_data
     char    *start;
     char    *end;
     char    *rooms;
-    char    **links;
     char    **names;
+    int     **links;
+    int     table_size;
 }   t_data;
 
 void ft_test(void);

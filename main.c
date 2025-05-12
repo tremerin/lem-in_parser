@@ -88,39 +88,70 @@ char *get_name(char *room)
         j++;
     }
     name[j] = 0;
-    printf("get name: %s\n", name);
     return (name);
 }
 
+//adjacency matrix
 void make_table(t_data *data)
 {
     char **rooms = ft_split(data->rooms, '\n');
     int i = 0;
-    printf("create table\n");
     while (rooms[i])
     {
         printf("room: %s\n", rooms[i]);
         i++;
     }
-    printf("total rooms: %i\n", i);
     data->names = malloc(sizeof(char *) * (i + 1));
     i = 0;
     while (rooms[i])
     {
         data->names[i] = get_name(rooms[i]);
-        printf("stored: %s\n", data->names[i]);
         i++;
     }
     data->names[i] = '\0';
-    printf("table 0: %s\n", data->names[0]);
-    printf("table 1: %s\n", data->names[1]);
-    printf("table 2: %s\n", data->names[2]);
+    data->table_size = i;
+    data->links = malloc(sizeof(int *) * i);
+    i = 0;
+    while (i < data->table_size)
+    {
+        data->links[i] = malloc(sizeof(int) * data->table_size);
+        ft_bzero(data->links[i], data->table_size);
+        i++;
+    }
+}
+
+void print_table(t_data data)
+{
+    int i;
+    int j;
+
+    i = 0;
+    printf("print table\n");
+    while (i < data.table_size)
+    {
+        j = 0;
+        printf("%s/", data.names[i]);
+        while (j < data.table_size)
+        {
+            printf("%d", data.links[i][j]);
+            j++;
+        }
+        i++;
+        printf("\n");
+    }
+}
+
+void read_link(t_data *data, char *link)
+{
+    (void)data;
+    printf("read link: %s", link);
 }
 
 int main(void)
 {
     char    *str;
     char    *link_str;
+    char    *tmp;
     int     start;
     int     end;
     int     create_table;
@@ -159,8 +190,13 @@ int main(void)
         }
         ft_putstr_fd(str, 1);
         //check room
+
         if (is_room(str))
-            data.rooms = ft_strjoin(data.rooms, str);
+        {
+            tmp = ft_strdup(data.rooms);
+            free(data.rooms);
+            data.rooms = ft_strjoin(tmp, str);
+        }
         //check link
         if (is_link(str))
         {
@@ -170,7 +206,8 @@ int main(void)
                 make_table(&data);
             }
             link_str = ft_strjoin(link_str, str);
-
+            //read link
+            read_link(&data, str);
         }
         free(str);
         str = get_next_line(0);
@@ -184,11 +221,9 @@ int main(void)
     int i = 0;
     while (data.names[i])
     {
-        printf("%s.\n", data.names[i]);
+        printf("%s$\n", data.names[i]);
         i++;
     }
-    printf("%s\n", data.names[0]);
-    printf("%s\n", data.names[1]);
-    printf("%s\n", data.names[2]);
+    print_table(data);
     return (0);
 }
