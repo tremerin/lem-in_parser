@@ -12,7 +12,7 @@ typedef struct s_data
     char    *rooms;
     char    **names;
     int     **links;
-    int     table_size;
+    size_t    table_size;
 }   t_data;
 
 void ft_test(void);

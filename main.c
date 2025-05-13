@@ -95,7 +95,9 @@ char *get_name(char *room)
 void make_table(t_data *data)
 {
     char **rooms = ft_split(data->rooms, '\n');
-    int i = 0;
+    size_t i = 0;
+    size_t j = 0;
+
     while (rooms[i])
     {
         printf("room: %s\n", rooms[i]);
@@ -114,26 +116,32 @@ void make_table(t_data *data)
     i = 0;
     while (i < data->table_size)
     {
+        j = 0;
         data->links[i] = malloc(sizeof(int) * data->table_size);
-        ft_bzero(data->links[i], data->table_size);
+        while (j < data->table_size)
+        {
+            data->links[i][j] = 0;
+            j++;
+        }
         i++;
     }
 }
 
 void print_table(t_data data)
 {
-    int i;
-    int j;
+    size_t i;
+    size_t j;
 
     i = 0;
     printf("print table\n");
     while (i < data.table_size)
     {
         j = 0;
-        printf("%s/", data.names[i]);
+        //printf("size %ld\n", data.table_size);
+        //printf("%s/", data.names[i]);
         while (j < data.table_size)
         {
-            printf("%d", data.links[i][j]);
+            printf("%d ", data.links[i][j]);
             j++;
         }
         i++;
@@ -143,8 +151,40 @@ void print_table(t_data data)
 
 void read_link(t_data *data, char *link)
 {
-    (void)data;
-    printf("read link: %s", link);
+    //printf("read link: %s", link);
+    char    *node_one;
+    char    *node_two;
+    size_t  i = 0;
+    size_t  len = ft_strlen(link);
+    int     pos_name_one;
+    int     pos_name_two;
+
+    if (link[len -1] == '\n')
+        len--;
+    while (link[i])
+    {
+        if (link[i] == '-')
+        {
+            node_one = ft_substr(link, 0, i);
+            node_two = ft_substr(link, i + 1, len - (i+1));
+        }
+        i++;
+    }
+    //printf("one: %s$\ntwo: %s$\n", node_one, node_two);
+    i = 0;
+    while (i < data->table_size)
+    {
+        if (ft_strncmp(data->names[i], node_one, ft_strlen(node_one)) == 0)
+            pos_name_one = i;
+        else if (ft_strncmp(data->names[i], node_two, ft_strlen(node_two)) == 0)
+            pos_name_two = i;
+        i++;
+    }
+    //printf("one: %d, two: %d\n", pos_name_one, pos_name_two);
+    data->links[pos_name_one][pos_name_two] = 1;
+    data->links[pos_name_two][pos_name_one] = 1;
+    free(node_one);
+    free(node_two);
 }
 
 int main(void)
@@ -212,18 +252,18 @@ int main(void)
         free(str);
         str = get_next_line(0);
     }
-    printf("\nAnts: %d\n", data.ants);
-    printf("Start: %s", data.start);
-    printf("End: %s", data.end);
-    printf("Rooms:\n%s", data.rooms);
-    printf("Links:\n%s\n", link_str);
-    printf("data->names:\n");
-    int i = 0;
-    while (data.names[i])
-    {
-        printf("%s$\n", data.names[i]);
-        i++;
-    }
+    // printf("\nAnts: %d\n", data.ants);
+    // printf("Start: %s", data.start);
+    // printf("End: %s", data.end);
+    // printf("Rooms:\n%s", data.rooms);
+    // printf("Links:\n%s\n", link_str);
+    // printf("data->names:\n");
+    // int i = 0;
+    // while (data.names[i])
+    // {
+    //     printf("%s$\n", data.names[i]);
+    //     i++;
+    // }
     print_table(data);
     return (0);
 }
