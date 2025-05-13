@@ -37,7 +37,7 @@ int is_room(char *str)
         return (0);
     char * num_one = ft_substr(str, space_one, (space_two - space_one) -1);
     char * num_two = ft_substr(str, space_two, (ft_strlen(str) - space_two) -1);
-    printf("num1: %s,num2: %s\n", num_one, num_two);
+    //printf("num1: %s,num2: %s\n", num_one, num_two);
     if (!is_int(num_one) || !is_int(num_two))
     {
         free(num_one);
@@ -100,7 +100,7 @@ void make_table(t_data *data)
 
     while (rooms[i])
     {
-        printf("room: %s\n", rooms[i]);
+        //printf("room: %s\n", rooms[i]);
         i++;
     }
     data->names = malloc(sizeof(char *) * (i + 1));
@@ -228,7 +228,7 @@ int main(void)
             data.end = ft_strdup(str);
             end++;
         }
-        ft_putstr_fd(str, 1);
+        //ft_putstr_fd(str, 1);
         //check room
 
         if (is_room(str))
