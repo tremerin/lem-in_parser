@@ -44,6 +44,8 @@ int is_room(char *str)
         free(num_two);
         return (0);
     }
+    free(num_one);
+    free(num_two);
     return (1);
 }
 
@@ -125,23 +127,45 @@ void make_table(t_data *data)
         }
         i++;
     }
+    i = 0;
+    while (rooms[i])
+    {
+        free(rooms[i]);
+        i++;
+    }
+    free(rooms);
 }
 
 void print_table(t_data data)
 {
     size_t i;
     size_t j;
-
+    size_t len = 0;
     i = 0;
-    printf("print table\n");
+    //printf("print table\n");
+    len += printf("      | ");
+    while (i < data.table_size)
+    {
+        len += printf("%-6s", data.names[i]);
+        i++;
+    }
+    printf("\n");
+    i = 0;
+    while (i < len)
+    {
+        printf("=");
+        i++;
+    }
+    printf("\n");
+    i = 0;
     while (i < data.table_size)
     {
         j = 0;
         //printf("size %ld\n", data.table_size);
-        //printf("%s/", data.names[i]);
+        printf("%-5s | ", data.names[i]);
         while (j < data.table_size)
         {
-            printf("%d ", data.links[i][j]);
+            printf("%-5d ", data.links[i][j]);
             j++;
         }
         i++;
@@ -190,7 +214,7 @@ void read_link(t_data *data, char *link)
 int main(void)
 {
     char    *str;
-    char    *link_str;
+    //char    *link_str;
     char    *tmp;
     int     start;
     int     end;
@@ -204,9 +228,9 @@ int main(void)
     end = 0;
     create_table = 0;
     str = get_next_line(0);
-    link_str = ft_strdup("");
+    //link_str = ft_strdup("");
     if (is_int(str))
-        data.ants = ft_atoi(str);
+    data.ants = ft_atoi(str);
     while (str)
     {
         //void line
@@ -236,6 +260,7 @@ int main(void)
             tmp = ft_strdup(data.rooms);
             free(data.rooms);
             data.rooms = ft_strjoin(tmp, str);
+            free(tmp);
         }
         //check link
         if (is_link(str))
@@ -245,7 +270,7 @@ int main(void)
             {
                 make_table(&data);
             }
-            link_str = ft_strjoin(link_str, str);
+            //link_str = ft_strjoin(link_str, str);
             //read link
             read_link(&data, str);
         }
@@ -265,5 +290,18 @@ int main(void)
     //     i++;
     // }
     print_table(data);
+    size_t  i = 0;
+    while (i < data.table_size)
+    {
+        free(data.links[i]);
+        free(data.names[i]);
+        i++;
+    }
+    free(data.links);
+    free(data.names);
+    free(data.rooms);
+    free(data.start);
+    free(data.end);
+
     return (0);
 }
