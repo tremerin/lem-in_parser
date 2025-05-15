@@ -1,1 +1,3 @@
 *.o
+generator_linux
+*.a

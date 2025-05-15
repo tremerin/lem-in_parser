@@ -211,6 +211,23 @@ void read_link(t_data *data, char *link)
     free(node_two);
 }
 
+void    free_data(t_data *data)
+{
+    size_t i = 0;
+    while (i < data->table_size)
+    {
+        free(data->names[i]);
+        free(data->links[i]);
+        i++;
+    }
+    free(data->names);
+    free(data->links);
+    free(data->rooms);
+    free(data->start);
+    free(data->end);
+}
+
+
 int main(void)
 {
     char    *str;
@@ -254,7 +271,6 @@ int main(void)
         }
         //ft_putstr_fd(str, 1);
         //check room
-
         if (is_room(str))
         {
             tmp = ft_strdup(data.rooms);
@@ -290,18 +306,17 @@ int main(void)
     //     i++;
     // }
     print_table(data);
-    size_t  i = 0;
-    while (i < data.table_size)
+    // list test
+    t_list  *list;
+    int i = 0;
+    list = malloc(sizeof(t_list) * 1);
+    list->next = NULL;
+    while (i < 10)
     {
-        free(data.links[i]);
-        free(data.names[i]);
+        ft_lstadd_front(&list, ft_lstnew(&i));
         i++;
     }
-    free(data.links);
-    free(data.names);
-    free(data.rooms);
-    free(data.start);
-    free(data.end);
-
+    printf("len list:%d", ft_lstsize(list));
+    free_data(&data);
     return (0);
 }
