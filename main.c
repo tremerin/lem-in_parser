@@ -227,6 +227,11 @@ void    free_data(t_data *data)
     free(data->end);
 }
 
+void print_int(int i)
+{
+    printf("i = %d", i);
+}
+
 
 int main(void)
 {
@@ -316,7 +321,7 @@ int main(void)
         ft_lstadd_front(&list, ft_lstnew(&i));
         i++;
     }
-    printf("len list:%d", ft_lstsize(list));
+    printf("len list:%d\n", ft_lstsize(list));
     free_data(&data);
     return (0);
 }
