@@ -241,6 +241,7 @@ int main(void)
     int     start;
     int     end;
     int     create_table;
+    size_t  i = 0;
     t_data  data;
 
 
@@ -264,6 +265,7 @@ int main(void)
         else if (start == 1)
         {
             data.start = ft_strdup(str);
+            data.p_start = i;
             start++;
         }
         //check end
@@ -272,6 +274,7 @@ int main(void)
         else if (end == 1)
         {
             data.end = ft_strdup(str);
+            data.p_end = i;
             end++;
         }
         //ft_putstr_fd(str, 1);
@@ -282,6 +285,7 @@ int main(void)
             free(data.rooms);
             data.rooms = ft_strjoin(tmp, str);
             free(tmp);
+            i++;
         }
         //check link
         if (is_link(str))
@@ -311,17 +315,8 @@ int main(void)
     //     i++;
     // }
     print_table(data);
-    // list test
-    t_list  *list;
-    int i = 0;
-    list = malloc(sizeof(t_list) * 1);
-    list->next = NULL;
-    while (i < 10)
-    {
-        ft_lstadd_front(&list, ft_lstnew(&i));
-        i++;
-    }
-    printf("len list:%d\n", ft_lstsize(list));
+    printf("start pos: %d, end pos: %d\n", data.p_start, data.p_end);
+    //find paths
     free_data(&data);
     return (0);
 }
