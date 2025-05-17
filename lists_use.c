@@ -2,6 +2,12 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+typedef struct s_path
+{
+    size_t          len;
+    unsigned int    *nodes;
+}   t_path;
+
 typedef struct s_list
 {
 	void				*content;
@@ -138,35 +144,26 @@ int	ft_lstsize(t_list *lst)
 	return (count);
 }
 
-int main()
-{
-    t_list *list = NULL;
-    int i = 0;
+int main(void) {
+    t_list *path_list = NULL;
 
-    while (i < 10)
-    {
-        int *value = malloc(sizeof(int));
-        if (!value)
-            return (1); 
-        *value = i;
+    for (int i = 0; i < 10; i++) {
+        t_path *path = malloc(sizeof(t_path));
+        if (!path) return 1;
 
-        t_list *node = ft_lstnew(value);
-        if (!node)
-        {
-            free(value);
-            return (1); 
-        }
+        path->len = i;            // ← Aquí se almacena el valor de i
+        path->nodes = NULL;       // O puedes asignar memoria si los necesitas
 
-        ft_lstadd_back(&list, node);
-        i++;
+        ft_lstadd_back(&path_list, ft_lstnew(path));
     }
 
-    t_list *tmp = list;
-    while (tmp)
-    {
-        printf("Valor almacenado: %d\n", *(int *)tmp->content);
-        tmp = tmp->next;
+    // Mostrar lista
+    t_list *current = path_list;
+    while (current) {
+        t_path *p = (t_path *)current->content;
+        printf("path->len = %zu\n", p->len);
+        current = current->next;
     }
-    ft_lstclear(&list, free);
+
     return 0;
 }

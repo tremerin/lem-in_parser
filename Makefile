@@ -1,6 +1,6 @@
 NAME		= parser
 SRC			= main.c\
-			test.c\
+			pathfinder.c\
 
 CC			= gcc
 CFLAGS		= -Wall -Werror -Wextra

@@ -316,7 +316,29 @@ int main(void)
     // }
     print_table(data);
     printf("start pos: %d, end pos: %d\n", data.p_start, data.p_end);
+
     //find paths
+    t_list *paths = NULL;
+    t_path *path = malloc(sizeof(t_path));
+    path->len = 1;
+    path->nodes = malloc(sizeof(unsigned int) * path->len); 
+    path->nodes[0] = data.p_start;
+    //t_list *node = ft_lstnew(path);
+    ft_lstadd_back(&paths, ft_lstnew(path));
+    //print last node
+    t_path *p = (t_path *)paths->content;
+    printf("len: %d\n", p->nodes[0]);
+    //next
+    i = 0;
+    int pos = 1;
+    while (i < data.table_size)
+    {
+        if (data.links[pos][i] == 1)
+        {
+            printf("next: %ld\n", i);
+        }
+        i++;
+    }
     free_data(&data);
     return (0);
 }

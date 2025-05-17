@@ -23,7 +23,21 @@ typedef struct s_path
     unsigned int    *nodes;
 }   t_path;
 
-
-void ft_test(void);
+/**
+ * next_node - Retrieves the indices of nodes directly connected to a given node.
+ * @data: Pointer to the t_data structure containing the adjacency matrix (links) and table size.
+ * @pos: Index of the current node in the adjacency matrix.
+ * 
+ * This function scans the adjacency matrix row corresponding to `pos`, counts the number
+ * of directly connected nodes (where link == 1), and returns a dynamically allocated array
+ * of unsigned ints. The first element of the array contains the number of connected nodes,
+ * followed by the indices of those nodes.
+ * 
+ * Return: A pointer to an array of unsigned int where:
+ *         - [0] = number of connected nodes
+ *         - [1..n] = indices of connected nodes
+ *         The caller is responsible for freeing the returned array.
+ */
+unsigned int *next_node(t_data * data, int pos);
 
 #endif
