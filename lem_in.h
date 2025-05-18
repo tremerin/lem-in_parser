@@ -1,8 +1,8 @@
-#ifndef PARSER_H
-    #define PARSER_H
+#ifndef LEM_IN_H
+    #define LEM_IN_H
 
 # include "./Libft/libft.h"
-# include <stdio.h>
+# include <stdio.h> //debug
 
 typedef struct s_data
 {
@@ -39,5 +39,11 @@ typedef struct s_path
  *         The caller is responsible for freeing the returned array.
  */
 unsigned int *next_node(t_data * data, int pos);
+
+//parser
+int is_int(char *str);
+int is_room(char *str);
+int is_link(char *str);
+
 
 #endif

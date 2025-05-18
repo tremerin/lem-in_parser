@@ -1,6 +1,7 @@
-NAME		= parser
+NAME		= lem_in
 SRC			= main.c\
 			pathfinder.c\
+			parser.c\
 
 CC			= gcc
 CFLAGS		= -Wall -Werror -Wextra
