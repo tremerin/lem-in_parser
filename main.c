@@ -256,16 +256,9 @@ int main(void)
     t_path *p = (t_path *)paths->content;
     printf("len: %d\n", p->nodes[0]);
     //next
-    i = 0;
-    int pos = 1;
-    while (i < data.table_size)
-    {
-        if (data.links[pos][i] == 1)
-        {
-            printf("next: %ld\n", i);
-        }
-        i++;
-    }
+    unsigned int *nexts = next_node(&data, path->nodes[path->len -1]);
+    printf("next len: %u", nexts[0]);
     free_data(&data);
     return (0);
 }
+

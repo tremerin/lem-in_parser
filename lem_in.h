@@ -40,6 +40,8 @@ typedef struct s_path
  */
 unsigned int *next_node(t_data * data, int pos);
 
+int contain_pos(unsigned int *positions, unsigned int pos, size_t len);
+
 //parser
 int is_int(char *str);
 int is_room(char *str);

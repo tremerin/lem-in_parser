@@ -29,3 +29,15 @@ unsigned int *next_node(t_data * data, int pos)
     }
     return (nodes);
 }
+
+int contain_pos(unsigned int *positions, unsigned int pos, size_t len)
+{
+    size_t i = 0;
+    while (i < len)
+    {
+        if (positions[i] == pos)
+            return (1);
+        i++;
+    }
+    return (0);
+}
