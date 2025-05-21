@@ -15,6 +15,7 @@ typedef struct s_data
     char            **names;
     int             **links;
     size_t          table_size;
+    t_list          *paths;
 }   t_data;
 
 typedef struct s_path
@@ -38,14 +39,15 @@ typedef struct s_path
  *         - [1..n] = indices of connected nodes
  *         The caller is responsible for freeing the returned array.
  */
-unsigned int *next_node(t_data * data, int pos);
+unsigned int    *next_node(t_data * data, int pos);
 
-int contain_pos(unsigned int *positions, unsigned int pos, size_t len);
+int             contain_pos(unsigned int *positions, unsigned int pos, size_t len);
+void            add_nodes_to_path(t_data *data);
 
 //parser
-int is_int(char *str);
-int is_room(char *str);
-int is_link(char *str);
+int             is_int(char *str);
+int             is_room(char *str);
+int             is_link(char *str);
 
 
 #endif
