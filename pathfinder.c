@@ -44,6 +44,8 @@ int contain_pos(unsigned int *positions, unsigned int pos, size_t len)
 
 void    add_nodes_to_path(t_data *data)
 {
+    //iter list
+    t_list *iter = data->paths;
     while (data->paths)
     {
         t_path  *tmp = (t_path *)data->paths->content;
@@ -58,7 +60,8 @@ void    add_nodes_to_path(t_data *data)
         }
         if (last == data->p_end)
         {
-            printf("here!\n");
+            printf("path end!\n");
+            data->paths = data->paths->next;
             continue;
         }
         unsigned int    j = 1;
@@ -66,22 +69,25 @@ void    add_nodes_to_path(t_data *data)
         {
             if (contain_pos(tmp->nodes, nexts[j], tmp->len) == 0)
             {
+                t_path  *new = malloc(sizeof(t_path) * 1);
+                new->len = tmp->len +1;
+                new->nodes = malloc(sizeof(unsigned int) * new->len);
+                i = 0;
+                while (i < tmp->len)
+                {
+                    new->nodes[i] = tmp->nodes[i];
+                    i++;
+                }
+                new->nodes[i] = nexts[j];
+                ft_lstadd_back(&data->paths, ft_lstnew(new));
+                printf("add new node\n");
                 j++;
-                continue;
             }
-            t_path  *new = malloc(sizeof(t_path) * 1);
-            new->len = tmp->len +1;
-            new->nodes = malloc(sizeof(unsigned int) * new->len);
-            i = 0;
-            while (i < tmp->len)
-            {
-                new->nodes[i] = tmp->nodes[i];
-                i++;
-            }
-            new->nodes[i] = nexts[j];
-            ft_lstadd_back(&data->paths, ft_lstnew(new));
-                j++;
         }
-        data->paths = data->paths->next;
+        while (j > 1)
+        {
+            data->paths = data->paths->next;
+            j--;
+        }
     }
 }
