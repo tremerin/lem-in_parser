@@ -14,6 +14,7 @@ typedef struct s_data
     char            *rooms;
     char            **names;
     int             **links;
+    int             *weights;
     size_t          table_size;
     t_list          *paths;
 }   t_data;
@@ -43,6 +44,10 @@ unsigned int    *next_node(t_data * data, int pos);
 
 int             contain_pos(unsigned int *positions, unsigned int pos, size_t len);
 void            add_nodes_to_path(t_data *data);
+
+//node_weight
+void            init_weights(t_data *data, size_t size);
+void            assign_weight(t_data *data);
 
 //parser
 int             is_int(char *str);
