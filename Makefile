@@ -2,6 +2,7 @@ NAME		= lem_in
 SRC			= main.c\
 			pathfinder.c\
 			parser.c\
+			node_weight.c\
 
 CC			= gcc
 CFLAGS		= -Wall -Werror -Wextra

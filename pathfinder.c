@@ -45,7 +45,7 @@ int contain_pos(unsigned int *positions, unsigned int pos, size_t len)
 void    add_nodes_to_path(t_data *data)
 {
     //iter list
-    t_list *iter = data->paths;
+    //t_list *iter = data->paths;
     while (data->paths)
     {
         t_path  *tmp = (t_path *)data->paths->content;

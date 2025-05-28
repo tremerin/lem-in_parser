@@ -33,6 +33,7 @@ void make_table(t_data *data)
         i++;
     }
     data->names = malloc(sizeof(char *) * (i + 1));
+    init_weights(data, i);
     i = 0;
     while (rooms[i])
     {
@@ -97,6 +98,22 @@ void print_table(t_data data)
         }
         i++;
         printf("\n");
+    }
+}
+
+void print_weights_table(t_data data)
+{
+    size_t  i = 0;
+    while (i < data.table_size)
+    {
+        size_t  j = 0;
+        while (j < data.table_size)
+        {
+            printf("%u ", data.weight_table[i][j]);
+            j++;
+        }
+        printf("\n");
+        i++;
     }
 }
 
@@ -254,12 +271,17 @@ int main(void)
     //t_list *node = ft_lstnew(path);
     ft_lstadd_back(&data.paths, ft_lstnew(path));
     //print last node
-    t_path *p = (t_path *)data.paths->content;
-    printf("len: %d\n", p->nodes[0]);
+    //t_path *p = (t_path *)data.paths->content;
+    //printf("len: %d\n", p->nodes[0]);
     //next
     //unsigned int *nexts = next_node(&data, path->nodes[path->len -1]);
     //printf("next len: %u\n", nexts[0]);
-    add_nodes_to_path(&data);
+    //add_nodes_to_path(&data);
+    assign_weight(&data);
+    print_weight(&data);
+    weight_table(&data);
+    print_weights_table(data);
+    printf("paths: %u\n", number_of_paths(&data));
     free_data(&data);
     return (0);
 }
