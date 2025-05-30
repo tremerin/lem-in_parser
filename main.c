@@ -281,7 +281,9 @@ int main(void)
     print_weight(&data);
     weight_table(&data);
     print_weights_table(data);
-    printf("paths: %u\n", number_of_paths(&data));
+    number_of_paths(&data);
+    printf("paths: %u\n", data.n_paths);
+    path_finding(&data);
     free_data(&data);
     return (0);
 }

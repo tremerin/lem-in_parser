@@ -4,6 +4,12 @@
 # include "./Libft/libft.h"
 # include <stdio.h> //debug
 
+typedef struct s_path
+{
+    size_t          len;
+    unsigned int    *nodes;
+}   t_path;
+
 typedef struct s_data
 {
     int             ants;
@@ -18,13 +24,10 @@ typedef struct s_data
     unsigned int    **weight_table;
     size_t          table_size;
     t_list          *paths;
+    t_path          *all_paths;
+    unsigned int    n_paths; //max paths
 }   t_data;
 
-typedef struct s_path
-{
-    size_t          len;
-    unsigned int    *nodes;
-}   t_path;
 
 /**
  * next_node - Retrieves the indices of nodes directly connected to a given node.
@@ -42,6 +45,7 @@ typedef struct s_path
  *         The caller is responsible for freeing the returned array.
  */
 unsigned int    *next_node(t_data * data, int pos);
+unsigned int    *next_node2(t_data * data, int pos);
 
 int             contain_pos(unsigned int *positions, unsigned int pos, size_t len);
 void            add_nodes_to_path(t_data *data);
@@ -51,7 +55,8 @@ void            init_weights(t_data *data, size_t size);
 void            assign_weight(t_data *data);
 void            print_weight(t_data *data);
 void            weight_table(t_data *data);
-unsigned int    number_of_paths(t_data *data);
+void            number_of_paths(t_data *data);
+void            path_finding(t_data *data);
 
 //parser
 int             is_int(char *str);

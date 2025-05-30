@@ -68,7 +68,7 @@ void weight_table(t_data *data)
     }
 }
 
-unsigned int    number_of_paths(t_data *data)
+void    number_of_paths(t_data *data)
 {
     unsigned int paths = 1;
     unsigned int checks;
@@ -86,5 +86,79 @@ unsigned int    number_of_paths(t_data *data)
         paths += (checks -1);
         i++;
     }
-    return (paths);
+    data->n_paths = paths;
+    data->all_paths = malloc(sizeof(unsigned int *) * paths);
+    //calculate max path len
+    i = 0;
+    while (i < data->table_size)
+    {
+        data->all_paths[i].nodes = malloc(sizeof(unsigned int) * data->table_size);
+        data->all_paths[i].len = 0;
+        i++;
+    }
+}
+
+void path_finding(t_data *data)
+{
+    //init all_paths
+    data->all_paths[0].nodes[0] = data->p_start;
+    data->all_paths[0].len = 1;
+    //acutal number of paths
+    unsigned int paths = 1;
+    //while paths are imcompletes
+    int incomplete = 1;
+    while (incomplete)
+    {
+        size_t i = 0;
+        incomplete = 0;
+        while (i < paths)
+        {
+            unsigned int pos = data->all_paths[i].nodes[data->all_paths[i].len -1];
+            printf("len: %lu\n", data->all_paths[i].len);
+            printf("pos: %u\n", pos);
+            printf("path: %u\n", paths);
+            //ha terminado en la salida
+            if (pos == data->p_end)
+            {
+                i++;
+                continue;
+            }
+            unsigned int *nexts = next_node2(data, pos);
+            printf("nexts[0]: %u\n", nexts[0]);
+            //ha terminado sin salida
+            if (nexts[0] == 0)
+            {
+                i++;
+                continue;
+            }
+            //continua el camino
+            size_t j = 0;
+            while (j < nexts[0])
+            {
+                incomplete = 1;
+                //añade otro nodo al camino actual
+                if (j == 0)
+                {
+                    data->all_paths[i].nodes[data->all_paths[i].len] = nexts[j];
+                    data->all_paths[i].len += 1;
+                }
+                //se bifurca
+                else
+                {
+                    size_t cp = 0;
+                    while (cp < data->all_paths[i].len)
+                    {
+                        data->all_paths[paths].nodes[cp] = data->all_paths[i].nodes[cp];
+                        cp++;
+                    }
+                    data->all_paths[paths].nodes[cp -1] = nexts[j];
+                    data->all_paths[paths].len = data->all_paths[i].len;
+                    paths++;
+                }
+                j++;
+            }
+            i++;
+            printf("%lu\n", i);
+        }
+    }
 }
