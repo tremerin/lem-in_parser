@@ -46,6 +46,7 @@ typedef struct s_data
  */
 unsigned int    *next_node(t_data * data, int pos);
 unsigned int    *next_node2(t_data * data, int pos);
+unsigned int    *next_node3(t_data * data, int pos, size_t path);
 
 int             contain_pos(unsigned int *positions, unsigned int pos, size_t len);
 void            add_nodes_to_path(t_data *data);

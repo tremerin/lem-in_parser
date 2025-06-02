@@ -114,6 +114,7 @@ void path_finding(t_data *data)
         while (i < paths)
         {
             unsigned int pos = data->all_paths[i].nodes[data->all_paths[i].len -1];
+            printf("i:%lu\n", i);
             printf("len: %lu\n", data->all_paths[i].len);
             printf("pos: %u\n", pos);
             printf("path: %u\n", paths);
@@ -124,6 +125,7 @@ void path_finding(t_data *data)
                 continue;
             }
             unsigned int *nexts = next_node2(data, pos);
+            //unsigned int *nexts = next_node3(data, pos, i);
             printf("nexts[0]: %u\n", nexts[0]);
             //ha terminado sin salida
             if (nexts[0] == 0)
@@ -132,12 +134,12 @@ void path_finding(t_data *data)
                 continue;
             }
             //continua el camino
-            size_t j = 0;
-            while (j < nexts[0])
+            size_t j = 1;
+            while (j <= nexts[0])
             {
                 incomplete = 1;
                 //añade otro nodo al camino actual
-                if (j == 0)
+                if (j == 1)
                 {
                     data->all_paths[i].nodes[data->all_paths[i].len] = nexts[j];
                     data->all_paths[i].len += 1;
@@ -158,7 +160,6 @@ void path_finding(t_data *data)
                 j++;
             }
             i++;
-            printf("%lu\n", i);
         }
     }
 }
