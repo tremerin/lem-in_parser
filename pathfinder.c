@@ -50,7 +50,7 @@ unsigned int *next_node2(t_data * data, int pos)
     len = 0;
     while (i < data->table_size)
     {
-        if (data->weight_table[pos][i] == 1)
+        if (data->weight_table[pos][i] == 1 )
         {
             len++;
             nodes[len] = i;
@@ -68,11 +68,12 @@ unsigned int *next_node3(t_data * data, int pos, size_t path)
 
     while (i < data->table_size)
     {
-        if (data->weight_table[pos][i] == 1)
+        if (data->weight_table[pos][i] == 1  &&
+            !contain_pos(data->all_paths[path].nodes, i, data->all_paths[path].len))
             len++;
         i++;
     }
-    nodes = malloc(sizeof(unsigned int) * (len + 1));
+    nodes = malloc(sizeof(unsigned int) * (len +1));
     if (!nodes)
         return (NULL);
     nodes[0] = len;

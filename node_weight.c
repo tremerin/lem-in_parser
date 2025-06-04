@@ -98,38 +98,61 @@ void    number_of_paths(t_data *data)
     }
 }
 
+void print_paths(t_data *data, unsigned int paths)
+{
+    size_t i = 0;
+    while (i < paths)
+    {
+        size_t j = 0;
+        printf("Path[%lu] ", i);
+        while (j < data->all_paths[i].len)
+        {
+            printf("%s ", data->names[data->all_paths[i].nodes[j]]);
+            j++;
+        }
+        printf("\n");
+        i++;
+    }
+}
+
 void path_finding(t_data *data)
 {
     //init all_paths
     data->all_paths[0].nodes[0] = data->p_start;
     data->all_paths[0].len = 1;
     //acutal number of paths
+    unsigned int *nexts;
     unsigned int paths = 1;
     //while paths are imcompletes
     int incomplete = 1;
     while (incomplete)
     {
+        print_paths(data, paths);
+        printf("\n");
         size_t i = 0;
         incomplete = 0;
         while (i < paths)
         {
             unsigned int pos = data->all_paths[i].nodes[data->all_paths[i].len -1];
-            printf("i:%lu\n", i);
-            printf("len: %lu\n", data->all_paths[i].len);
-            printf("pos: %u\n", pos);
-            printf("path: %u\n", paths);
+            //printf("i:%lu\n", i);
+            //printf("len: %lu\n", data->all_paths[i].len);
+            //printf("pos: %u\n", pos);
+            //printf("path: %u\n", paths);
             //ha terminado en la salida
             if (pos == data->p_end)
             {
+                printf("exit\n");
                 i++;
                 continue;
             }
-            unsigned int *nexts = next_node2(data, pos);
-            //unsigned int *nexts = next_node3(data, pos, i);
-            printf("nexts[0]: %u\n", nexts[0]);
+            //unsigned int *nexts = next_node2(data, pos);
+            nexts = next_node3(data, pos, i);
+            printf("nexts[0] path[%lu]: %u\n", i, nexts[0]);
             //ha terminado sin salida
             if (nexts[0] == 0)
             {
+                free(nexts);
+                printf("no exit\n");
                 i++;
                 continue;
             }
