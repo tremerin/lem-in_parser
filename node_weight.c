@@ -87,7 +87,7 @@ void    number_of_paths(t_data *data)
         i++;
     }
     data->n_paths = paths;
-    data->all_paths = malloc(sizeof(unsigned int *) * paths);
+    data->all_paths = malloc(sizeof(t_path) * paths);
     //calculate max path len
     i = 0;
     while (i < data->table_size)
@@ -147,12 +147,12 @@ void path_finding(t_data *data)
             }
             //unsigned int *nexts = next_node2(data, pos);
             nexts = next_node3(data, pos, i);
-            printf("nexts[0] path[%lu]: %u\n", i, nexts[0]);
+            //printf("nexts[0] path[%lu]: %u\n", i, nexts[0]);
             //ha terminado sin salida
             if (nexts[0] == 0)
             {
                 free(nexts);
-                printf("no exit\n");
+                //printf("no exit\n");
                 i++;
                 continue;
             }
@@ -173,6 +173,7 @@ void path_finding(t_data *data)
                     size_t cp = 0;
                     while (cp < data->all_paths[i].len)
                     {
+                        //printf("%i\n", paths);
                         data->all_paths[paths].nodes[cp] = data->all_paths[i].nodes[cp];
                         cp++;
                     }
