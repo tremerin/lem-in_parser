@@ -86,7 +86,7 @@ unsigned int *next_node3(t_data * data, int pos, size_t path)
         {
             len++;
             nodes[len] = i;
-            printf("node:%s\n", data->names[i]);
+            //printf("node:%s\n", data->names[i]);
         }
         i++;
     }
