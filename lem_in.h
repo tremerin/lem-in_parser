@@ -28,34 +28,16 @@ typedef struct s_data
     unsigned int    n_paths; //max paths
 }   t_data;
 
-
-/**
- * next_node - Retrieves the indices of nodes directly connected to a given node.
- * @data: Pointer to the t_data structure containing the adjacency matrix (links) and table size.
- * @pos: Index of the current node in the adjacency matrix.
- * 
- * This function scans the adjacency matrix row corresponding to `pos`, counts the number
- * of directly connected nodes (where link == 1), and returns a dynamically allocated array
- * of unsigned ints. The first element of the array contains the number of connected nodes,
- * followed by the indices of those nodes.
- * 
- * Return: A pointer to an array of unsigned int where:
- *         - [0] = number of connected nodes
- *         - [1..n] = indices of connected nodes
- *         The caller is responsible for freeing the returned array.
- */
-unsigned int    *next_node(t_data * data, int pos);
-unsigned int    *next_node2(t_data * data, int pos);
-unsigned int    *next_node3(t_data * data, int pos, size_t path);
-
+//pathfinding
+unsigned int    *next_node(t_data * data, int pos, size_t path);
 int             contain_pos(unsigned int *positions, unsigned int pos, size_t len);
-void            add_nodes_to_path(t_data *data);
 
 //node_weight
 void            init_weights(t_data *data, size_t size);
 void            assign_weight(t_data *data);
 void            print_weight(t_data *data);
 void            weight_table(t_data *data);
+void            print_weights_table(t_data data);
 void            number_of_paths(t_data *data);
 void            path_finding(t_data *data);
 

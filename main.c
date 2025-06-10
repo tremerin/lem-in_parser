@@ -101,22 +101,6 @@ void print_table(t_data data)
     }
 }
 
-void print_weights_table(t_data data)
-{
-    size_t  i = 0;
-    while (i < data.table_size)
-    {
-        size_t  j = 0;
-        while (j < data.table_size)
-        {
-            printf("%u ", data.weight_table[i][j]);
-            j++;
-        }
-        printf("\n");
-        i++;
-    }
-}
-
 void read_link(t_data *data, char *link)
 {
     //printf("read link: %s", link);
