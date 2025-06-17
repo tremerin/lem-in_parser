@@ -267,6 +267,8 @@ int main(void)
     print_weights_table(data);
     number_of_paths(&data);
     printf("paths: %u\n", data.n_paths);
+    //assing_multiplier(&data);
+    //print_multipliers(data);
     path_finding(&data);
     free_data(&data);
     return (0);

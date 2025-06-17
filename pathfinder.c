@@ -8,7 +8,7 @@ unsigned int *next_node(t_data * data, int pos, size_t path)
 
     while (i < data->table_size)
     {
-        if (data->weight_table[pos][i] == 1  &&
+        if (data->weight_table[pos][i] > 0 &&
             !contain_pos(data->all_paths[path].nodes, i, data->all_paths[path].len))
             len++;
         i++;
@@ -21,7 +21,7 @@ unsigned int *next_node(t_data * data, int pos, size_t path)
     len = 0;
     while (i < data->table_size)
     {
-        if (data->weight_table[pos][i] == 1 &&
+        if ((data->weight_table[pos][i] == 1 || data->weight_table[pos][i] == 2) &&
             !contain_pos(data->all_paths[path].nodes, i, data->all_paths[path].len))
         {
             len++;
@@ -57,14 +57,14 @@ void    number_of_paths(t_data *data) //fail
         checks = 0;
         while (j < data->table_size)
         {
-            if (data->weight_table[j][i] == 1)
+            if (data->weight_table[j][i] > 0)
                 checks++;
             j++;
         }
         paths += (checks -1);
         i++;
     }
-    data->n_paths = paths + 2;
+    data->n_paths = paths + 2; //*
     data->all_paths = malloc(sizeof(t_path) * data->n_paths);
     //calculate max path len
     i = 0;

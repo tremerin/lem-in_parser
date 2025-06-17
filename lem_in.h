@@ -21,6 +21,7 @@ typedef struct s_data
     char            **names;
     int             **links;
     int             *weights;
+    int             *multiplier;
     unsigned int    **weight_table;
     size_t          table_size;
     t_list          *paths;
@@ -40,6 +41,8 @@ void            weight_table(t_data *data);
 void            print_weights_table(t_data data);
 void            number_of_paths(t_data *data);
 void            path_finding(t_data *data);
+void            assing_multiplier(t_data *data);
+void            print_multipliers(t_data data);
 
 //parser
 int             is_int(char *str);

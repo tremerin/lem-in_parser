@@ -58,8 +58,14 @@ void weight_table(t_data *data)
         unsigned int j = 0;
         while (j < data->table_size)
         {
-            if (data->links[i][j] == 1 && data->weights[i] <= data->weights[j])
+            /*if (data->links[i][j] == 1 && data->weights[i] <= data->weights[j])
                 data->weight_table[i][j] = 1;
+            else
+                data->weight_table[i][j] = 0;*/
+            if (data->links[i][j] == 1 && data->weights[i] < data->weights[j])
+                data->weight_table[i][j] = 1;
+            else if (data->links[i][j] == 1 && data->weights[i] == data->weights[j])
+                data->weight_table[i][j] = 2;
             else
                 data->weight_table[i][j] = 0;
             j++;
@@ -84,3 +90,50 @@ void print_weights_table(t_data data)
     }
 }
 
+void printf_multipliers(t_data data)
+{
+    size_t i = 0;
+    while (i < data.table_size)
+    {
+        printf("node multiplier[%s]: %u\n", data.names[i], data.multiplier[i]);
+        i++;
+    }
+}
+
+void assing_multiplier(t_data *data)
+{
+    int    max_weigth = 0;
+    int incomplete = 1;
+    int deep = 1;
+    size_t i = 0;
+    data->multiplier = malloc(sizeof(int) * data->table_size);
+    while (i < data->table_size)
+    {
+        data->multiplier[i] = 0;
+        if (data->weights[i] > max_weigth)
+            max_weigth = data->weights[i];
+        i++;
+    }
+    data->multiplier[data->p_start] = 1;
+    while (deep < max_weigth)
+    {
+        while (incomplete)
+        {
+            i = 0;
+            incomplete = 0;
+            while (i < data->table_size)
+            {
+                // busca hermanos
+                // busca herederos
+                if (data->weights[i] == deep -1)
+                {
+                    printf("look for heirs");
+                }
+                if (data->weights[i] == deep && data->multiplier[i] == 0) 
+                    incomplete = 1;
+                i++;
+            }
+        }
+        deep++;
+    }
+}
