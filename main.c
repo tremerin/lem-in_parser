@@ -235,32 +235,8 @@ int main(void)
     // printf("End: %s", data.end);
     // printf("Rooms:\n%s", data.rooms);
     // printf("Links:\n%s\n", link_str);
-    // printf("data->names:\n");
-    // int i = 0;
-    // while (data.names[i])
-    // {
-    //     printf("%s$\n", data.names[i]);
-    //     i++;
-    // }
     print_table(data);
     printf("start pos: %d, end pos: %d\n", data.p_start, data.p_end);
-
-    //find paths
-    //t_list *paths = NULL;
-    data.paths = NULL;
-    t_path *path = malloc(sizeof(t_path));
-    path->len = 1;
-    path->nodes = malloc(sizeof(unsigned int) * path->len); 
-    path->nodes[0] = data.p_start;
-    //t_list *node = ft_lstnew(path);
-    ft_lstadd_back(&data.paths, ft_lstnew(path));
-    //print last node
-    //t_path *p = (t_path *)data.paths->content;
-    //printf("len: %d\n", p->nodes[0]);
-    //next
-    //unsigned int *nexts = next_node(&data, path->nodes[path->len -1]);
-    //printf("next len: %u\n", nexts[0]);
-    //add_nodes_to_path(&data);
     assign_weight(&data);
     print_weight(&data);
     weight_table(&data);
